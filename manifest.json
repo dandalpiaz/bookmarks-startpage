@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "Bookmarks Viewer",
+  "version": "1.0",
+  "description": "Displays your bookmarks on simple, customizable page.",
+  "permissions": [
+    "bookmarks"
+  ]
+}
