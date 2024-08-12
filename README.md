@@ -1,11 +1,12 @@
 
 # bookmarks-viewer
 
+A browser extension that displays your bookmarks on simple, customizable pages
+
 ## Todo
 
-- Get users a link to the ext main page
 - Update page title dynamically
-- Add linking.page user customizations, summary/details
+- Add linking.page user customizations, summary/details section
 
 ### Later
 
@@ -13,4 +14,3 @@
 - Figure out how to publish the extension
 - Set up a donation button
 - Check in Firefox (load temporary addon)
-- Rename to 'Better Bookmark Viewer'?

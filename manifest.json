@@ -2,11 +2,16 @@
   "manifest_version": 3,
   "name": "Bookmarks Viewer",
   "version": "1.0",
-  "description": "Displays your bookmarks on simple, customizable page.",
+  "description": "Displays your bookmarks on simple, customizable pages",
   "permissions": [
     "bookmarks"
   ],
   "action": {
     "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   }
 }
