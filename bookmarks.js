@@ -39,10 +39,17 @@ document.addEventListener('DOMContentLoaded', function () {
     function displayBookmarks(nodes, container, level = 1) {
         nodes.forEach(node => {
             if (node.children && node.children.length > 0) {
-                // Create heading for folder name
                 const heading = document.createElement('h' + Math.min(level, 6));
-                heading.textContent = node.title;
+                heading.textContent = node.title || 'My Bookmarks';
                 container.appendChild(heading);
+
+                const folderLink = document.createElement('a');
+                folderLink.href = level === 1 ? 'bookmarks.html' : '?page=' + node.title;
+                folderLink.textContent = level === 1 ? '^' : '>';
+                folderLink.setAttribute('aria-label', level === 1 ? 'Go to bookmarks homepage' : "Go to " + node.title + " folder");
+                if (heading.textContent !== 'My Bookmarks') {
+                    heading.appendChild(folderLink);
+                }
 
                 // Check if the folder contains any bookmarks
                 const hasBookmarks = node.children.some(child => child.url);
@@ -104,12 +111,22 @@ window.addEventListener('load', () => {
             }
         });
 
-        // wrap all the section divs in a new div with class "sections"
-        const sections = document.querySelectorAll('.section');
-        const sectionsDiv = document.createElement('div');
+        const sectionDivs = document.querySelectorAll('.section');
+        let sectionsDiv = document.createElement('div');
         sectionsDiv.className = 'sections';
-        sections.forEach(section => sectionsDiv.appendChild(section));
-        document.body.appendChild(sectionsDiv);
+        sectionDivs.forEach(section => {
+            if (section.parentElement === sectionsDiv) {
+                return;
+            }
+            if (section.previousElementSibling && section.previousElementSibling.classList.contains('sections')) {
+                sectionsDiv = section.previousElementSibling;
+            } else {
+                sectionsDiv = document.createElement('div');
+                sectionsDiv.className = 'sections';
+                section.parentNode.insertBefore(sectionsDiv, section);
+            }
+            sectionsDiv.appendChild(section);
+        });
         
     }, 10);
 });

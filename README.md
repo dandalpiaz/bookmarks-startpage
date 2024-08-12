@@ -4,11 +4,8 @@
 ## Todo
 
 - Get users a link to the ext main page
-- Remove ul nesting
-- If folder is empty, don't print heading
-- Use query string to open specific folders
-- Add favicons (from local? via Google URL?)
-- Add linking.page user customizations
+- Update page title dynamically
+- Add linking.page user customizations, summary/details
 
 ### Later
 
