@@ -5,5 +5,8 @@
   "description": "Displays your bookmarks on simple, customizable page.",
   "permissions": [
     "bookmarks"
-  ]
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
 }
