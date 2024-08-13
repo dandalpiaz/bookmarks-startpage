@@ -5,7 +5,9 @@ A browser extension that displays your bookmarks on simple, customizable pages
 
 ## Todo
 
-- Add linking.page user customizations, summary/details section
+- Add linking.page user customizations
+    - Use summary/details section
+    - Save data to local, sync?
 
 ### Later
 
