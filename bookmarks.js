@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             const link = document.createElement('a');
                             link.href = child.url;
                             link.textContent = child.title;
-                            link.target = '_blank';
 
                             const favicon = document.createElement('img');
                             favicon.src = 'https://www.google.com/s2/favicons?sz=16&domain_url=' + child.url;
@@ -95,10 +94,7 @@ window.addEventListener('load', () => {
         const uls = document.querySelectorAll('ul');
         
         uls.forEach(ul => {
-            // Find the preceding <h2> element
             let prev = ul.previousElementSibling;
-            
-            // Ensure the previous sibling is an <h2>
             if (prev) {
                 // Create a new <div> with class "section"
                 const sectionDiv = document.createElement('div');
@@ -127,6 +123,13 @@ window.addEventListener('load', () => {
             }
             sectionsDiv.appendChild(section);
         });
+
+        const h1 = document.querySelector('h1');
+        if (h1.textContent.slice(-1) === '^') {
+            document.title = h1.textContent.slice(0, -1) + ' - Bookmarks Viewer';
+        } else {
+            document.title = h1.textContent + ' - Bookmarks Viewer';
+        }
         
     }, 10);
 });
