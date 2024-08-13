@@ -1,0 +1,230 @@
+
+@font-face {
+    font-family: 'Noto Serif';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/NotoSerif-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Noto Serif';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/NotoSerif-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/Lato-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/Lato-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Literata';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/Literata-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Literata';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/Literata-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/Merriweather-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/Merriweather-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/OpenSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/OpenSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/Roboto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./fonts/Ubuntu-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./fonts/Ubuntu-Bold.ttf') format('truetype');
+}
+
+:root {
+    --user-background-color: #000000;
+    --user-title-color: #eeeeee;
+    --user-heading-color: #52ff94;
+    --user-link-color: #b0e0e6;
+    --scrollbar-color: #444444;
+}
+
+html {
+    scrollbar-color: var(--scrollbar-color) transparent;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--user-background-color);
+    color: #eee;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0px;
+    margin-top: 1rem;
+    line-height: 30px;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    margin-left: 7px;
+    font-size: 28px;
+}
+
+h1 {
+    color: var(--user-title-color);
+}
+
+h2, h3, h4, h5, h6 {
+    color: var(--user-heading-color);
+}
+
+a {
+    color: var(--user-link-color);
+    text-decoration: none;
+    font-family: 'Noto Serif';
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+li {
+    line-height: 1.9;
+}
+
+img {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.sections {
+    display: grid;
+    grid-gap: 0px 10px;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr) ) ;
+}
+
+details {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    padding: 7px;
+    background: black;
+    border-bottom: 1px solid #333;
+    border-left: 1px solid #333;
+}
+
+summary:hover {
+    cursor: pointer;
+}
+
+input, select {
+    margin: 5px;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    padding: 3px;
+    height: 30px;
+}
+
+.setting {
+    text-align: right;
+}
+
+hr {
+    border-color: #111;
+}
+
+input[type="submit"] {
+    margin: 0px;
+    margin-top: 15px;
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 3px;
+    background: rgb(30,30,220);
+    border: 1px solid rgb(80,80,255);
+    color: white;
+    cursor: pointer;
+    display: block;
+}
+
+input[type="submit"]:hover {
+    background: rgb(0,0,190);
+}

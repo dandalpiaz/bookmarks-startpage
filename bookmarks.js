@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Get the page parameter from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const startPage = urlParams.get('page');
 
@@ -7,22 +6,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const bookmarksContainer = document.getElementById('bookmarksContainer');
         
         if (startPage) {
-            // Search for the folder with the name matching startPage
             const startNode = findStartNode(bookmarkTreeNodes, startPage);
             if (startNode) {
-                // If the folder is found, display bookmarks starting from that folder
                 displayBookmarks([startNode], bookmarksContainer);
             } else {
-                // If no matching folder is found, display a message
                 bookmarksContainer.textContent = `Folder "${startPage}" not found.`;
             }
         } else {
-            // If no page parameter is provided, display the full bookmark tree
             displayBookmarks(bookmarkTreeNodes, bookmarksContainer);
         }
     });
 
-    // Function to search for a folder by name
     function findStartNode(nodes, targetName) {
         for (const node of nodes) {
             if (node.title === targetName) {
@@ -51,15 +45,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     heading.appendChild(folderLink);
                 }
 
-                // Check if the folder contains any bookmarks
                 const hasBookmarks = node.children.some(child => child.url);
 
                 if (hasBookmarks) {
-                    // Create a <ul> for the bookmark links if there are any bookmarks
                     const ul = document.createElement('ul');
                     container.appendChild(ul);
 
-                    // Add bookmark links
                     node.children.forEach(child => {
                         if (child.url) {
                             const li = document.createElement('li');
@@ -79,28 +70,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }
 
-                // Recursively display nested folders (outside the current <ul>)
                 displayBookmarks(node.children.filter(child => child.children), container, level + 1);
             }
         });
     }
 });
 
-
 // Wait for 10 milliseconds after the page has loaded
 window.addEventListener('load', () => {
     setTimeout(() => {
-        // Get all <ul> elements
         const uls = document.querySelectorAll('ul');
         
         uls.forEach(ul => {
             let prev = ul.previousElementSibling;
             if (prev) {
-                // Create a new <div> with class "section"
                 const sectionDiv = document.createElement('div');
                 sectionDiv.className = 'section';
                 
-                // Move the <h2> and <ul> into the new <div>
                 ul.parentNode.insertBefore(sectionDiv, ul);
                 sectionDiv.appendChild(prev);
                 sectionDiv.appendChild(ul);
@@ -132,4 +118,90 @@ window.addEventListener('load', () => {
         }
         
     }, 10);
+});
+
+function lightenOrDarkenColor(hex, percent) {
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+        hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    percent = percent / 100;
+
+    let r = parseInt(hex.slice(0, 2), 16);
+    let g = parseInt(hex.slice(2, 4), 16);
+    let b = parseInt(hex.slice(4, 6), 16);
+
+    let luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+    let delta = luminance < 128 ? (percent * 255) : (-percent * 255);
+    r = clamp(r + delta);
+    g = clamp(g + delta);
+    b = clamp(b + delta);
+
+    return "#" + toHex(r) + toHex(g) + toHex(b);
+}
+
+function clamp(value) {
+    return Math.max(0, Math.min(Math.floor(value), 255));
+}
+
+function toHex(value) {
+    let hex = value.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+const r = document.querySelector(':root');
+
+document.getElementById('bg_color').oninput = function () {
+	r.style.setProperty('--user-background-color', this.value);
+    r.style.setProperty('--scrollbar-color', lightenOrDarkenColor(this.value, 27));
+}
+
+document.getElementById('title_color').oninput = function () {
+    r.style.setProperty('--user-title-color', this.value);
+}
+
+document.getElementById('heading_color').oninput = function () {
+    r.style.setProperty('--user-heading-color', this.value);
+}
+
+document.getElementById('link_color').oninput = function () {
+    r.style.setProperty('--user-link-color', this.value);
+}
+
+document.getElementById('settings').onsubmit = function () {
+    const bgColor = document.getElementById('bg_color').value;
+    chrome.storage.sync.set({ bgColor: bgColor });
+
+    const titleColor = document.getElementById('title_color').value;
+    chrome.storage.sync.set({ titleColor: titleColor });
+
+    const headingColor = document.getElementById('heading_color').value;
+    chrome.storage.sync.set({ headingColor: headingColor });
+
+    const linkColor = document.getElementById('link_color').value;
+    chrome.storage.sync.set({ linkColor: linkColor });
+
+    return false;
+}
+
+chrome.storage.sync.get('bgColor', function (data) {
+	r.style.setProperty('--user-background-color', data.bgColor || '#000000');
+    document.getElementById('bg_color').value = data.bgColor || '#000000';
+    r.style.setProperty('--scrollbar-color', lightenOrDarkenColor(data.bgColor, 27) || '#444444');
+});
+
+chrome.storage.sync.get('titleColor', function (data) {
+    r.style.setProperty('--user-title-color', data.titleColor || '#ffffff');
+    document.getElementById('title_color').value = data.titleColor || '#ffffff';
+});
+
+chrome.storage.sync.get('headingColor', function (data) {
+    r.style.setProperty('--user-heading-color', data.headingColor || '#52ff94');
+    document.getElementById('heading_color').value = data.headingColor || '#52ff94';
+});
+
+chrome.storage.sync.get('linkColor', function (data) {
+    r.style.setProperty('--user-link-color', data.linkColor || '#b0e0e6');
+    document.getElementById('link_color').value = data.linkColor || '#b0e0e6';
 });

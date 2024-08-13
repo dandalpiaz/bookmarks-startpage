@@ -4,7 +4,8 @@
   "version": "1.0",
   "description": "Displays your bookmarks on simple, customizable pages",
   "permissions": [
-    "bookmarks"
+    "bookmarks",
+    "storage"
   ],
   "action": {
     "default_popup": "popup.html"
