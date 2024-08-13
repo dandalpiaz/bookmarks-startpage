@@ -169,6 +169,18 @@ document.getElementById('link_color').oninput = function () {
     r.style.setProperty('--user-link-color', this.value);
 }
 
+document.getElementById('title_font').onchange = function () {
+    r.style.setProperty('--user-title-font', this.value);
+}
+
+document.getElementById('heading_font').onchange = function () {
+    r.style.setProperty('--user-heading-font', this.value);
+}
+
+document.getElementById('link_font').onchange = function () {
+    r.style.setProperty('--user-link-font', this.value);
+}
+
 document.getElementById('settings').onsubmit = function () {
     const bgColor = document.getElementById('bg_color').value;
     chrome.storage.sync.set({ bgColor: bgColor });
@@ -181,6 +193,15 @@ document.getElementById('settings').onsubmit = function () {
 
     const linkColor = document.getElementById('link_color').value;
     chrome.storage.sync.set({ linkColor: linkColor });
+
+    const titleFont = document.getElementById('title_font').value;
+    chrome.storage.sync.set({ titleFont: titleFont });
+
+    const headingFont = document.getElementById('heading_font').value;
+    chrome.storage.sync.set({ headingFont: headingFont });
+
+    const linkFont = document.getElementById('link_font').value;
+    chrome.storage.sync.set({ linkFont: linkFont });
 
     return false;
 }
@@ -204,4 +225,19 @@ chrome.storage.sync.get('headingColor', function (data) {
 chrome.storage.sync.get('linkColor', function (data) {
     r.style.setProperty('--user-link-color', data.linkColor || '#b0e0e6');
     document.getElementById('link_color').value = data.linkColor || '#b0e0e6';
+});
+
+chrome.storage.sync.get('titleFont', function (data) {
+    r.style.setProperty('--user-title-font', data.titleFont || 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+    document.getElementById('title_font').value = data.titleFont || 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+});
+
+chrome.storage.sync.get('headingFont', function (data) {
+    r.style.setProperty('--user-heading-font', data.headingFont || 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+    document.getElementById('heading_font').value = data.headingFont || 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+});
+
+chrome.storage.sync.get('linkFont', function (data) {
+    r.style.setProperty('--user-link-font', data.linkFont || 'Noto Serif');
+    document.getElementById('link_font').value = data.linkFont || 'Noto Serif';
 });

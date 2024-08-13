@@ -8,10 +8,7 @@ A browser extension that displays your bookmarks on simple, customizable pages
 - Use ?start=
 - Use aria-live for form submit success
 - Add a 'Discard Changes' button?
-- Add linking.page user customizations
-    - Use summary/details section
-    - Save data to browser sync?
-    - Colors, column width, fonts
+- Add option for column width, masonry?
 - Add help text to popup.html
 
 ### Later
