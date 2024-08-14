@@ -6,9 +6,7 @@ A browser extension that displays your bookmarks on simple, customizable pages
 ## Todo
 
 - Use ?start=
-- Use aria-live for form submit success
-- Add a 'Discard Changes' button?
-- Add option for column width, masonry?
+- Add option for masonry?
 - Add help text to popup.html
 
 ### Later

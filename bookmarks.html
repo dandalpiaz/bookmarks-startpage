@@ -15,6 +15,7 @@
         </summary>
 
         <br />
+        <div aria-live="polite" id="live"></div>
 
         <form id="settings">
             <div class="setting">
@@ -81,8 +82,17 @@
                 </select>
             </div>
 
+            <hr />
+
+            <div class="setting">
+                <label for="column_size">Column Size (px)</label>
+                <input id="column_size" name="column_size" type="number" min="100" max="1000">
+            </div>
+
+            <!-- add a discard change button-->
             <input type="submit" value="Save Changes">
         </form>
+        <button id="discard_changes"><em>Discard Changes</em></button>
 
     </details>
 </header>

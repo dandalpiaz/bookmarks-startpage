@@ -181,6 +181,10 @@ document.getElementById('link_font').onchange = function () {
     r.style.setProperty('--user-link-font', this.value);
 }
 
+document.getElementById('column_size').onchange = function () {
+    r.style.setProperty('--user-column-size', this.value + 'px');
+}
+
 document.getElementById('settings').onsubmit = function () {
     const bgColor = document.getElementById('bg_color').value;
     chrome.storage.sync.set({ bgColor: bgColor });
@@ -202,6 +206,17 @@ document.getElementById('settings').onsubmit = function () {
 
     const linkFont = document.getElementById('link_font').value;
     chrome.storage.sync.set({ linkFont: linkFont });
+
+    const columnSize = document.getElementById('column_size').value;
+    chrome.storage.sync.set({ columnSize: columnSize });
+
+    const live = document.getElementById('live');
+    live.textContent = 'Settings saved successfully!';
+    live.style.color = 'lightgreen';
+    live.style.display = 'block';
+    live.style.fontSize = '13px';
+    live.style.textAlign = 'center';
+    live.style.marginBottom = '15px';
 
     return false;
 }
@@ -241,3 +256,14 @@ chrome.storage.sync.get('linkFont', function (data) {
     r.style.setProperty('--user-link-font', data.linkFont || 'Noto Serif');
     document.getElementById('link_font').value = data.linkFont || 'Noto Serif';
 });
+
+chrome.storage.sync.get('columnSize', function (data) {
+    if (data.columnSize) {
+        r.style.setProperty('--user-column-size', data.columnSize.toString() + 'px' || '215px');
+    }
+    document.getElementById('column_size').value = data.columnSize || '215';
+});
+
+document.getElementById('discard_changes').onclick = function () {
+    location.reload();
+}

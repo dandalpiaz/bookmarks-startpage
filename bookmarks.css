@@ -120,6 +120,7 @@
     --user-title-font: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
     --user-heading-font: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
     --user-link-font: 'Noto Serif';
+    --user-column-size: 215px;
 }
 
 html {
@@ -183,7 +184,7 @@ img {
 .sections {
     display: grid;
     grid-gap: 0px 10px;
-    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr) ) ;
+    grid-template-columns: repeat(auto-fill, minmax(var(--user-column-size), 1fr) );
 }
 
 details {
@@ -232,4 +233,20 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background: rgb(0,0,190);
+}
+
+#discard_changes {
+    background: none;
+    color: lightcoral;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 12px;
+    padding: 5px;
+    border: none;
+    font-size: 12px;
+}
+
+#discard_changes:hover {
+    cursor: pointer;
 }
