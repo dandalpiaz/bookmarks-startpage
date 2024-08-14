@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
-    const startPage = urlParams.get('page');
+    const startPage = urlParams.get('start');
 
     chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
         const bookmarksContainer = document.getElementById('bookmarksContainer');
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function findStartNode(nodes, targetName) {
         for (const node of nodes) {
-            if (node.title === targetName) {
+            if (node.title === targetName && node.children) {
                 return node;
             }
             if (node.children) {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.appendChild(heading);
 
                 const folderLink = document.createElement('a');
-                folderLink.href = level === 1 ? 'bookmarks.html' : '?page=' + node.title;
+                folderLink.href = level === 1 ? 'bookmarks.html' : '?start=' + node.title;
                 folderLink.textContent = level === 1 ? '^' : '>';
                 folderLink.setAttribute('aria-label', level === 1 ? 'Go to bookmarks homepage' : "Go to " + node.title + " folder");
                 if (heading.textContent !== 'My Bookmarks') {
@@ -267,3 +267,7 @@ chrome.storage.sync.get('columnSize', function (data) {
 document.getElementById('discard_changes').onclick = function () {
     location.reload();
 }
+
+document.querySelector('main').addEventListener('focusin', () => {
+    document.getElementById('customize').open = false;
+});
