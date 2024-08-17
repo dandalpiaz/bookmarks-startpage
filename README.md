@@ -5,7 +5,6 @@ A browser extension that displays your bookmarks on simple, customizable pages
 
 ## Todo
 
-- Add help text to popup.html
 - Add option for masonry?
 
 ### Later
