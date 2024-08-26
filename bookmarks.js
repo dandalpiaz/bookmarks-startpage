@@ -270,9 +270,9 @@ chrome.storage.sync.get('linkFont', function (data) {
 
 chrome.storage.sync.get('columnSize', function (data) {
     if (data.columnSize) {
-        r.style.setProperty('--user-column-size', data.columnSize.toString() + 'px' || '215px');
+        r.style.setProperty('--user-column-size', data.columnSize.toString() + 'px' || '259px');
     }
-    document.getElementById('column_size').value = data.columnSize || '215';
+    document.getElementById('column_size').value = data.columnSize || '259';
 });
 
 document.getElementById('discard_changes').onclick = function () {
