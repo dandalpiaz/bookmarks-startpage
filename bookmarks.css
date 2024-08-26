@@ -136,6 +136,20 @@ body {
     margin-bottom: 20px;
 }
 
+#site-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: 15px;
+    display: inline-block;
+    color: var(--user-title-color);
+    font-family: var(--user-title-font);
+}
+
+#site-title img {
+    margin-right: 5px;
+    margin-left: 0px
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0px;
     margin-top: 2rem;

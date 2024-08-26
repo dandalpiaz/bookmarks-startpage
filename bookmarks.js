@@ -44,6 +44,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (heading.textContent !== 'My Bookmarks') {
                     heading.appendChild(folderLink);
                 }
+                if (heading.textContent === 'My Bookmarks') {
+                    heading.style.position = 'absolute';
+                    heading.style.width = '1px';
+                    heading.style.height = '1px';
+                    heading.style.margin = '-1px';
+                    heading.style.padding = '0';
+                    heading.style.overflow = 'hidden';
+                    heading.style.clip = 'rect(0 0 0 0)';
+                    heading.style.whiteSpace = 'nowrap';
+                    heading.style.border = '0';
+                }
 
                 const hasBookmarks = node.children.some(child => child.url);
 
