@@ -272,15 +272,15 @@ input[type="submit"] {
     width: 100%;
     padding: 5px 10px;
     border-radius: 3px;
-    background: rgb(30,30,220);
-    border: 1px solid rgb(80,80,255);
+    background: #405cf5;
+    border: 1px solid #555;
     color: white;
     cursor: pointer;
     display: block;
 }
 
 input[type="submit"]:hover {
-    background: rgb(0,0,190);
+    background: #3952dc;
 }
 
 #discard_changes {
