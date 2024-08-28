@@ -233,46 +233,85 @@ document.getElementById('settings').onsubmit = function () {
 }
 
 chrome.storage.sync.get('bgColor', function (data) {
-	r.style.setProperty('--user-background-color', data.bgColor || '#000000');
-    document.getElementById('bg_color').value = data.bgColor || '#000000';
-    r.style.setProperty('--scrollbar-color', lightenOrDarkenColor(data.bgColor, 27) || '#444444');
+    if (data && data.bgColor) {
+        r.style.setProperty('--user-background-color', data.bgColor);
+        document.getElementById('bg_color').value = data.bgColor;
+        r.style.setProperty('--scrollbar-color', lightenOrDarkenColor(data.bgColor, 27));
+    } else {
+        r.style.setProperty('--user-background-color', '#000000');
+        document.getElementById('bg_color').value = '#000000';
+        r.style.setProperty('--scrollbar-color', '#444444');
+    }
 });
 
 chrome.storage.sync.get('titleColor', function (data) {
-    r.style.setProperty('--user-title-color', data.titleColor || '#ffffff');
-    document.getElementById('title_color').value = data.titleColor || '#ffffff';
+    if (data && data.titleColor) {
+        r.style.setProperty('--user-title-color', data.titleColor);
+        document.getElementById('title_color').value = data.titleColor;
+    } else {
+        r.style.setProperty('--user-title-color', '#ffffff');
+        document.getElementById('title_color').value = '#ffffff';
+    }
 });
 
 chrome.storage.sync.get('headingColor', function (data) {
-    r.style.setProperty('--user-heading-color', data.headingColor || '#52ff94');
-    document.getElementById('heading_color').value = data.headingColor || '#52ff94';
+    if (data && data.headingColor) {
+        r.style.setProperty('--user-heading-color', data.headingColor);
+        document.getElementById('heading_color').value = data.headingColor;
+    } else {
+        r.style.setProperty('--user-heading-color', '#52ff94');
+        document.getElementById('heading_color').value = '#52ff94';
+    }
 });
 
 chrome.storage.sync.get('linkColor', function (data) {
-    r.style.setProperty('--user-link-color', data.linkColor || '#b0e0e6');
-    document.getElementById('link_color').value = data.linkColor || '#b0e0e6';
+    if (data && data.linkColor) {
+        r.style.setProperty('--user-link-color', data.linkColor);
+        document.getElementById('link_color').value = data.linkColor;
+    } else {
+        r.style.setProperty('--user-link-color', '#b0e0e6');
+        document.getElementById('link_color').value = '#b0e0e6';
+    }
 });
 
 chrome.storage.sync.get('titleFont', function (data) {
-    r.style.setProperty('--user-title-font', data.titleFont || 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
-    document.getElementById('title_font').value = data.titleFont || 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+    if (data && data.titleFont) {
+        r.style.setProperty('--user-title-font', data.titleFont);
+        document.getElementById('title_font').value = data.titleFont;
+    } else {
+        r.style.setProperty('--user-title-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+        document.getElementById('title_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+    }
 });
 
 chrome.storage.sync.get('headingFont', function (data) {
-    r.style.setProperty('--user-heading-font', data.headingFont || 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
-    document.getElementById('heading_font').value = data.headingFont || 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+    if (data && data.headingFont) {
+        r.style.setProperty('--user-heading-font', data.headingFont);
+        document.getElementById('heading_font').value = data.headingFont;
+    } else {
+        r.style.setProperty('--user-heading-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+        document.getElementById('heading_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+    }
 });
 
 chrome.storage.sync.get('linkFont', function (data) {
-    r.style.setProperty('--user-link-font', data.linkFont || 'Noto Serif');
-    document.getElementById('link_font').value = data.linkFont || 'Noto Serif';
+    if (data && data.linkFont) {
+        r.style.setProperty('--user-link-font', data.linkFont);
+        document.getElementById('link_font').value = data.linkFont;
+    } else {
+        r.style.setProperty('--user-link-font', 'Noto Serif');
+        document.getElementById('link_font').value = 'Noto Serif';
+    }
 });
 
 chrome.storage.sync.get('columnSize', function (data) {
-    if (data.columnSize) {
-        r.style.setProperty('--user-column-size', data.columnSize.toString() + 'px' || '259px');
+    if (data && data.columnSize) {
+        r.style.setProperty('--user-column-size', data.columnSize.toString() + 'px');
+        document.getElementById('column_size').value = data.columnSize;
+    } else {
+        r.style.setProperty('--user-column-size', '259px');
+        document.getElementById('column_size').value = '259';
     }
-    document.getElementById('column_size').value = data.columnSize || '259';
 });
 
 document.getElementById('discard_changes').onclick = function () {

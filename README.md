@@ -9,6 +9,7 @@ A browser extension that displays your bookmarks on simple, customizable pages
     - Demo screenshots
     - Chrome
     - Firefox (test)
+- `chrome.storage.sync.clear()`
 
 ### Later
 
