@@ -10,6 +10,7 @@ A browser extension that displays your bookmarks on simple, customizable pages
     - Chrome
     - Firefox (test)
 - `chrome.storage.sync.clear()`
+- Make GH repo public? Add link to extension?
 
 ### Later
 
