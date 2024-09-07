@@ -15,6 +15,45 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             displayBookmarks(bookmarkTreeNodes, bookmarksContainer);
         }
+
+        const uls = document.querySelectorAll('ul');
+
+        uls.forEach(ul => {
+            let prev = ul.previousElementSibling;
+            if (prev) {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'section';
+                
+                ul.parentNode.insertBefore(sectionDiv, ul);
+                sectionDiv.appendChild(prev);
+                sectionDiv.appendChild(ul);
+            }
+        });
+        
+        const sectionDivs = document.querySelectorAll('.section');
+        let sectionsDiv = document.createElement('div');
+        sectionsDiv.className = 'sections';
+        sectionDivs.forEach(section => {
+            if (section.parentElement === sectionsDiv) {
+                return;
+            }
+            if (section.previousElementSibling && section.previousElementSibling.classList.contains('sections')) {
+                sectionsDiv = section.previousElementSibling;
+            } else {
+                sectionsDiv = document.createElement('div');
+                sectionsDiv.className = 'sections';
+                section.parentNode.insertBefore(sectionsDiv, section);
+            }
+            sectionsDiv.appendChild(section);
+        });
+        
+        const h1 = document.querySelector('h1');
+        if (h1.textContent.slice(-1) === '^') {
+            document.title = h1.textContent.slice(0, -1) + ' - Bookmarks Viewer';
+        } else {
+            document.title = h1.textContent + ' - Bookmarks Viewer';
+        }
+
     });
 
     function findStartNode(nodes, targetName) {
@@ -85,50 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-});
-
-// Wait for 10 milliseconds after the page has loaded
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        const uls = document.querySelectorAll('ul');
-        
-        uls.forEach(ul => {
-            let prev = ul.previousElementSibling;
-            if (prev) {
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = 'section';
-                
-                ul.parentNode.insertBefore(sectionDiv, ul);
-                sectionDiv.appendChild(prev);
-                sectionDiv.appendChild(ul);
-            }
-        });
-
-        const sectionDivs = document.querySelectorAll('.section');
-        let sectionsDiv = document.createElement('div');
-        sectionsDiv.className = 'sections';
-        sectionDivs.forEach(section => {
-            if (section.parentElement === sectionsDiv) {
-                return;
-            }
-            if (section.previousElementSibling && section.previousElementSibling.classList.contains('sections')) {
-                sectionsDiv = section.previousElementSibling;
-            } else {
-                sectionsDiv = document.createElement('div');
-                sectionsDiv.className = 'sections';
-                section.parentNode.insertBefore(sectionsDiv, section);
-            }
-            sectionsDiv.appendChild(section);
-        });
-
-        const h1 = document.querySelector('h1');
-        if (h1.textContent.slice(-1) === '^') {
-            document.title = h1.textContent.slice(0, -1) + ' - Bookmarks Viewer';
-        } else {
-            document.title = h1.textContent + ' - Bookmarks Viewer';
-        }
-        
-    }, 10);
 });
 
 function lightenOrDarkenColor(hex, percent) {
