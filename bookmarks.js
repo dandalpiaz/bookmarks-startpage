@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         const h1 = document.querySelector('h1');
         if (h1.textContent.slice(-1) === '^') {
-            document.title = h1.textContent.slice(0, -1) + ' - Bookmarks Viewer';
+            document.title = h1.textContent.slice(0, -1) + ' - Bookmarks Startpage';
         } else {
-            document.title = h1.textContent + ' - Bookmarks Viewer';
+            document.title = h1.textContent + ' - Bookmarks Startpage';
         }
 
     });

@@ -1,5 +1,5 @@
 
-# 🔖 bookmarks-viewer
+# 🔖 bookmarks-startpage
 
 A browser extension that displays your bookmarks on simple, customizable pages. View the [**Bookmarks Viewer** extension in the Chrome Web Store](https://chromewebstore.google.com/detail/bookmarks-viewer/nkbcfcjndkpjejdfekeemdelppjdmlga).
 

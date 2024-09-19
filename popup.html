@@ -35,13 +35,16 @@
     </style>
 </head>
 <body>
-    <h1><img src="icon48.png" alt="" /> Bookmarks Viewer</h1>
+    <h1><img src="icon48.png" alt="" /> Bookmarks Startpage</h1>
 
     <p style="color: #ccc;">A browser extension that displays your bookmarks on simple, customizable pages.</p>
 
     <p><em>The default display works best with short bookmark names, and, nested folders where bookmarks are included at the same level and roughly the same amount per folder</em></p>
 
-    <button id="openBookmarks">Open Bookmarks Viewer Page</button>
+    <input type="checkbox" id="newTabOverride" name="newTabOverride" value="newTabOverride">
+    <label for="newTabOverride" style="color: #ccc; font-size: 14px; vertical-align: bottom;">Use as New Tab page</label>
+
+    <button id="openBookmarks" style="margin-top: 15px;">Open Bookmarks Startpage</button>
     <script src="popup.js"></script>
 </body>
 </html>
