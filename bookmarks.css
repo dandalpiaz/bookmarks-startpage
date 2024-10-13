@@ -236,13 +236,14 @@ details {
     top: 0px;
     right: 0px;
     padding: 7px;
-    background: black;
-    border-bottom: 1px solid #333;
-    border-left: 1px solid #333;
+    background: var(--user-background-color);
+    border-bottom: 1px solid rgba(100, 100, 100, 0.5);
+    border-left: 1px solid rgba(100, 100, 100, 0.5);
 }
 
 summary {
     text-align: right;
+    color: var(--user-title-color);
 }
 
 summary:hover {
@@ -251,11 +252,15 @@ summary:hover {
 
 input, select {
     margin: 5px;
-    background: #222;
+    background: var(--user-background-color);
     border: 1px solid #444;
-    color: white;
+    color: var(--user-title-color);
     padding: 3px;
     height: 30px;
+}
+
+label {
+    color: var(--user-title-color);
 }
 
 .setting {
@@ -284,15 +289,14 @@ input[type="submit"]:hover {
 }
 
 #discard_changes {
-    background: none;
-    color: lightcoral;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 7px;
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 3px;
+    background: darkred;
+    border: 1px solid #555;
+    color: white;
     display: block;
-    margin-top: 12px;
-    padding: 5px;
-    border: none;
-    font-size: 12px;
 }
 
 #discard_changes:hover {

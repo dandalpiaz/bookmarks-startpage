@@ -223,6 +223,9 @@ document.getElementById('settings').onsubmit = function () {
     live.style.fontSize = '13px';
     live.style.textAlign = 'center';
     live.style.marginBottom = '15px';
+    live.style.fontWeight = '600';
+    live.style.padding = '5px';
+    live.style.backgroundColor = 'darkgreen';
 
     return false;
 }
