@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Bookmarks Startpage",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Displays your bookmarks on simple, customizable pages.",
   "permissions": [
     "bookmarks",
