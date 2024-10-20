@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function findStartNode(nodes, targetName) {
         for (const node of nodes) {
-            if (node.title === targetName && node.children) {
+            if (node.id === targetName && node.children) {
                 return node;
             }
             if (node.children) {
@@ -74,10 +74,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (node.children && node.children.length > 0) {
                 const heading = document.createElement('h' + Math.min(level, 6));
                 heading.textContent = node.title || 'My Bookmarks';
+                heading.id = node.id;
                 container.appendChild(heading);
 
                 const folderLink = document.createElement('a');
-                folderLink.href = level === 1 ? 'bookmarks.html' : '?start=' + node.title;
+                folderLink.href = level === 1 ? 'bookmarks.html' : '?start=' + node.id;
                 folderLink.textContent = level === 1 ? '^' : '>';
                 folderLink.setAttribute('aria-label', level === 1 ? 'Go to bookmarks homepage' : "Go to " + node.title + " folder");
                 if (heading.textContent !== 'My Bookmarks') {
