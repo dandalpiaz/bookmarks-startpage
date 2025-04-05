@@ -157,39 +157,52 @@ function toHex(value) {
     return hex.length == 1 ? "0" + hex : hex;
 }
 
+function enableSaveDiscardButtons() {
+    document.getElementById('save_changes').disabled = false;
+    document.getElementById('discard_changes').disabled = false;
+}
+
 const r = document.querySelector(':root');
 
 document.getElementById('bg_color').oninput = function () {
 	r.style.setProperty('--user-background-color', this.value);
     r.style.setProperty('--scrollbar-color', lightenOrDarkenColor(this.value, 27));
+    enableSaveDiscardButtons();
 }
 
 document.getElementById('title_color').oninput = function () {
     r.style.setProperty('--user-title-color', this.value);
+    enableSaveDiscardButtons();
 }
 
 document.getElementById('heading_color').oninput = function () {
     r.style.setProperty('--user-heading-color', this.value);
+    enableSaveDiscardButtons();
 }
 
 document.getElementById('link_color').oninput = function () {
     r.style.setProperty('--user-link-color', this.value);
+    enableSaveDiscardButtons();
 }
 
 document.getElementById('title_font').onchange = function () {
     r.style.setProperty('--user-title-font', this.value);
+    enableSaveDiscardButtons();
 }
 
 document.getElementById('heading_font').onchange = function () {
     r.style.setProperty('--user-heading-font', this.value);
+    enableSaveDiscardButtons();
 }
 
 document.getElementById('link_font').onchange = function () {
     r.style.setProperty('--user-link-font', this.value);
+    enableSaveDiscardButtons();
 }
 
 document.getElementById('column_size').onchange = function () {
     r.style.setProperty('--user-column-size', this.value + 'px');
+    enableSaveDiscardButtons();
 }
 
 document.getElementById('settings').onsubmit = function () {
@@ -218,105 +231,129 @@ document.getElementById('settings').onsubmit = function () {
     chrome.storage.sync.set({ columnSize: columnSize });
 
     const live = document.getElementById('live');
-    live.textContent = 'Settings saved successfully!';
-    live.style.color = 'lightgreen';
-    live.style.display = 'block';
-    live.style.fontSize = '13px';
-    live.style.textAlign = 'center';
-    live.style.marginBottom = '15px';
-    live.style.fontWeight = '600';
-    live.style.padding = '5px';
-    live.style.backgroundColor = 'darkgreen';
+    live.textContent = '';
+    live.style.display = 'none';
+    setTimeout(() => {
+        live.textContent = 'Settings saved successfully!';
+        live.style.color = 'lightgreen';
+        live.style.display = 'block';
+        live.style.backgroundColor = 'darkgreen';
+    }, 500);
+
+    document.getElementById('save_changes').disabled = true;
+    document.getElementById('discard_changes').disabled = true;
 
     return false;
 }
 
-chrome.storage.sync.get('bgColor', function (data) {
-    if (data && data.bgColor) {
-        r.style.setProperty('--user-background-color', data.bgColor);
-        document.getElementById('bg_color').value = data.bgColor;
-        r.style.setProperty('--scrollbar-color', lightenOrDarkenColor(data.bgColor, 27));
-    } else {
-        r.style.setProperty('--user-background-color', '#000000');
-        document.getElementById('bg_color').value = '#000000';
-        r.style.setProperty('--scrollbar-color', '#444444');
-    }
-});
+function setStyles() {
+    chrome.storage.sync.get('bgColor', function (data) {
+        if (data && data.bgColor) {
+            r.style.setProperty('--user-background-color', data.bgColor);
+            document.getElementById('bg_color').value = data.bgColor;
+            r.style.setProperty('--scrollbar-color', lightenOrDarkenColor(data.bgColor, 27));
+        } else {
+            r.style.setProperty('--user-background-color', '#000000');
+            document.getElementById('bg_color').value = '#000000';
+            r.style.setProperty('--scrollbar-color', '#444444');
+        }
+    });
 
-chrome.storage.sync.get('titleColor', function (data) {
-    if (data && data.titleColor) {
-        r.style.setProperty('--user-title-color', data.titleColor);
-        document.getElementById('title_color').value = data.titleColor;
-    } else {
-        r.style.setProperty('--user-title-color', '#ffffff');
-        document.getElementById('title_color').value = '#ffffff';
-    }
-});
+    chrome.storage.sync.get('titleColor', function (data) {
+        if (data && data.titleColor) {
+            r.style.setProperty('--user-title-color', data.titleColor);
+            document.getElementById('title_color').value = data.titleColor;
+        } else {
+            r.style.setProperty('--user-title-color', '#ffffff');
+            document.getElementById('title_color').value = '#ffffff';
+        }
+    });
 
-chrome.storage.sync.get('headingColor', function (data) {
-    if (data && data.headingColor) {
-        r.style.setProperty('--user-heading-color', data.headingColor);
-        document.getElementById('heading_color').value = data.headingColor;
-    } else {
-        r.style.setProperty('--user-heading-color', '#52ff94');
-        document.getElementById('heading_color').value = '#52ff94';
-    }
-});
+    chrome.storage.sync.get('headingColor', function (data) {
+        if (data && data.headingColor) {
+            r.style.setProperty('--user-heading-color', data.headingColor);
+            document.getElementById('heading_color').value = data.headingColor;
+        } else {
+            r.style.setProperty('--user-heading-color', '#52ff94');
+            document.getElementById('heading_color').value = '#52ff94';
+        }
+    });
 
-chrome.storage.sync.get('linkColor', function (data) {
-    if (data && data.linkColor) {
-        r.style.setProperty('--user-link-color', data.linkColor);
-        document.getElementById('link_color').value = data.linkColor;
-    } else {
-        r.style.setProperty('--user-link-color', '#b0e0e6');
-        document.getElementById('link_color').value = '#b0e0e6';
-    }
-});
+    chrome.storage.sync.get('linkColor', function (data) {
+        if (data && data.linkColor) {
+            r.style.setProperty('--user-link-color', data.linkColor);
+            document.getElementById('link_color').value = data.linkColor;
+        } else {
+            r.style.setProperty('--user-link-color', '#b0e0e6');
+            document.getElementById('link_color').value = '#b0e0e6';
+        }
+    });
 
-chrome.storage.sync.get('titleFont', function (data) {
-    if (data && data.titleFont) {
-        r.style.setProperty('--user-title-font', data.titleFont);
-        document.getElementById('title_font').value = data.titleFont;
-    } else {
-        r.style.setProperty('--user-title-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
-        document.getElementById('title_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
-    }
-});
+    chrome.storage.sync.get('titleFont', function (data) {
+        if (data && data.titleFont) {
+            r.style.setProperty('--user-title-font', data.titleFont);
+            document.getElementById('title_font').value = data.titleFont;
+        } else {
+            r.style.setProperty('--user-title-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+            document.getElementById('title_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+        }
+    });
 
-chrome.storage.sync.get('headingFont', function (data) {
-    if (data && data.headingFont) {
-        r.style.setProperty('--user-heading-font', data.headingFont);
-        document.getElementById('heading_font').value = data.headingFont;
-    } else {
-        r.style.setProperty('--user-heading-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
-        document.getElementById('heading_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
-    }
-});
+    chrome.storage.sync.get('headingFont', function (data) {
+        if (data && data.headingFont) {
+            r.style.setProperty('--user-heading-font', data.headingFont);
+            document.getElementById('heading_font').value = data.headingFont;
+        } else {
+            r.style.setProperty('--user-heading-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+            document.getElementById('heading_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+        }
+    });
 
-chrome.storage.sync.get('linkFont', function (data) {
-    if (data && data.linkFont) {
-        r.style.setProperty('--user-link-font', data.linkFont);
-        document.getElementById('link_font').value = data.linkFont;
-    } else {
-        r.style.setProperty('--user-link-font', 'Noto Serif');
-        document.getElementById('link_font').value = 'Noto Serif';
-    }
-});
+    chrome.storage.sync.get('linkFont', function (data) {
+        if (data && data.linkFont) {
+            r.style.setProperty('--user-link-font', data.linkFont);
+            document.getElementById('link_font').value = data.linkFont;
+        } else {
+            r.style.setProperty('--user-link-font', 'Noto Serif');
+            document.getElementById('link_font').value = 'Noto Serif';
+        }
+    });
 
-chrome.storage.sync.get('columnSize', function (data) {
-    if (data && data.columnSize) {
-        r.style.setProperty('--user-column-size', data.columnSize.toString() + 'px');
-        document.getElementById('column_size').value = data.columnSize;
-    } else {
-        r.style.setProperty('--user-column-size', '259px');
-        document.getElementById('column_size').value = '259';
-    }
-});
+    chrome.storage.sync.get('columnSize', function (data) {
+        if (data && data.columnSize) {
+            r.style.setProperty('--user-column-size', data.columnSize.toString() + 'px');
+            document.getElementById('column_size').value = data.columnSize;
+        } else {
+            r.style.setProperty('--user-column-size', '259px');
+            document.getElementById('column_size').value = '259';
+        }
+    });
+}
 
 document.getElementById('discard_changes').onclick = function () {
-    location.reload();
+    setStyles();
+    document.getElementById('save_changes').disabled = true;
+    document.getElementById('discard_changes').disabled = true;
+    const live = document.getElementById('live');
+    live.textContent = '';
+    live.style.display = 'none';
+    setTimeout(() => {
+        live.textContent = 'Changes discarded.';
+        live.style.color = '#ffffff';
+        live.style.display = 'block';
+        live.style.backgroundColor = '#444444';
+    }, 500);
 }
 
 document.querySelector('main').addEventListener('focusin', () => {
     document.getElementById('customize').open = false;
 });
+
+document.addEventListener('click', (event) => {
+    const details = document.querySelector('details');
+    if (details.open && !details.contains(event.target)) {
+        details.open = false;
+    }
+});
+
+setStyles();

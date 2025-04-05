@@ -7,6 +7,7 @@ A browser extension that displays your bookmarks on simple, customizable pages. 
 
 ## Todo
 
+- Create a demo page
 - Look into [Featured badge](https://www.extension.ninja/blog/post/how-to-get-featured-extension-badge-chrome-web-store/)
 - Publish for Firefox (test)
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bookmarks Stargpage</title>
+    <title>Bookmarks Startpage</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="bookmarks.css">
@@ -9,6 +9,9 @@
 <body>
 
 <header>
+    <a href="bookmarks.html" id="site-title">
+        <img src="icon16.png" alt="">bookmarks-startpage
+    </a>
     <details id="customize">
         <summary>
             customize 🎨
@@ -90,17 +93,14 @@
                 <input id="column_size" name="column_size" type="number" min="100" max="1000">
             </div>
 
-            <input type="submit" value="Save Changes">
+            <button id="save_changes" type="submit" disabled>Save Changes</button>
         </form>
-        <button id="discard_changes">Discard Changes</button>
+        <button id="discard_changes" disabled>Discard Changes</button>
 
     </details>
 </header>
 
 <main>
-    <a href="bookmarks.html" id="site-title">
-        <img src="icon16.png" alt="">bookmarks-startpage
-    </a>
     <div id="bookmarksContainer"></div>
 </main>
 
