@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             favicon.src = 'https://www.google.com/s2/favicons?sz=16&domain_url=' + child.url;
                             favicon.width = 16;
                             favicon.height = 16;
+                            favicon.alt = '';
 
                             li.appendChild(favicon);
                             li.appendChild(link);
