@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bookmarks Startpage</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="demo.css">
+    <link rel="icon" type="image/png" href="icon48.png">
+</head>
+<body>
+
+<header>
+    <a href="demo.html" id="site-title">
+        <img src="icon16.png" alt="">bookmarks-startpage
+    </a>
+    <details id="customize">
+        <summary>
+            customize 🎨
+        </summary>
+
+        <br />
+        <div aria-live="polite" id="live"></div>
+
+        <form id="settings">
+            <div class="setting">
+                <label for="bg_color">Background Color</label>
+                <input id="bg_color" name="bg_color" type="color">
+            </div>
+
+            <div class="setting">
+                <label for="title_color">Title Color</label>
+                <input id="title_color" name="title_color" type="color">
+            </div>
+
+            <div class="setting">
+                <label for="heading_color">Heading Color</label>
+                <input id="heading_color" name="heading_color" type="color">
+            </div>
+
+            <div class="setting">
+                <label for="link_color">Link Color</label>
+                <input id="link_color" name="link_color" type="color">
+            </div>
+
+            <hr />
+
+            <div class="setting">
+                <label for="title_font">Title Font</label>
+                <select name="title_font" id="title_font">
+                    <option value="system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif">default (system)</option>
+                    <option value="Lato">Lato</option>
+                    <option value="Literata">Literata</option>
+                    <option value="Merriweather">Merriweather</option>
+                    <option value="Noto Serif">Noto Serif</option>
+                    <option value="Open Sans">Open Sans</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Ubuntu">Ubuntu</option>
+                </select>
+            </div>
+
+            <div class="setting">
+                <label for="heading_font">Heading Font</label>
+                <select name="heading_font" id="heading_font">
+                    <option value="system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif">default (system)</option>
+                    <option value="Lato">Lato</option>
+                    <option value="Literata">Literata</option>
+                    <option value="Merriweather">Merriweather</option>
+                    <option value="Noto Serif">Noto Serif</option>
+                    <option value="Open Sans">Open Sans</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Ubuntu">Ubuntu</option>
+                </select>
+            </div>
+
+            <div class="setting">
+                <label for="link_font">Link Font</label>
+                <select name="link_font" id="link_font">
+                    <option value="Noto Serif">default (Noto Serif)</option>
+                    <option value="Lato">Lato</option>
+                    <option value="Literata">Literata</option>
+                    <option value="Merriweather">Merriweather</option>
+                    <option value="Noto Serif">Noto Serif</option>
+                    <option value="Open Sans">Open Sans</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Ubuntu">Ubuntu</option>
+                    <option value="system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif">(system)</option>
+                </select>
+            </div>
+
+            <hr />
+
+            <div class="setting">
+                <label for="column_size">Column Size (px)</label>
+                <input id="column_size" name="column_size" type="number" min="100" max="1000">
+            </div>
+
+            <button id="save_changes" type="submit" disabled>Save Changes</button>
+        </form>
+        <button id="discard_changes" disabled>Discard Changes</button>
+
+    </details>
+</header>
+
+<main>
+    <div id="bookmarksContainer"></div>
+</main>
+
+<script src="demo.js"></script>
+</body>
+</html>
