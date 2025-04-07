@@ -1,3 +1,8 @@
+
+//////////////////////////////////
+/////// Get Bookmark Data ////////
+//////////////////////////////////
+
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const startPage = urlParams.get('start');
@@ -85,15 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     heading.appendChild(folderLink);
                 }
                 if (heading.textContent === 'My Bookmarks') {
-                    heading.style.position = 'absolute';
-                    heading.style.width = '1px';
-                    heading.style.height = '1px';
-                    heading.style.margin = '-1px';
-                    heading.style.padding = '0';
-                    heading.style.overflow = 'hidden';
-                    heading.style.clip = 'rect(0 0 0 0)';
-                    heading.style.whiteSpace = 'nowrap';
-                    heading.style.border = '0';
+                    heading.classList.add('sr-only');
                 }
 
                 const hasBookmarks = node.children.some(child => child.url);
@@ -127,6 +124,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+//////////////////////////////////
+/////// Helper Functions /////////
+//////////////////////////////////
 
 function lightenOrDarkenColor(hex, percent) {
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
@@ -162,6 +163,10 @@ function enableSaveDiscardButtons() {
     document.getElementById('save_changes').disabled = false;
     document.getElementById('discard_changes').disabled = false;
 }
+
+//////////////////////////////////
+/////// On Settings Change ///////
+//////////////////////////////////
 
 const r = document.querySelector(':root');
 
@@ -206,6 +211,26 @@ document.getElementById('column_size').onchange = function () {
     enableSaveDiscardButtons();
 }
 
+document.getElementById('hide_default_folders').onchange = function () {
+    const h2s = document.querySelectorAll('h2');
+    h2s.forEach(h2 => {
+        if (this.checked) {
+            if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                h2.classList.add('sr-only');
+            }
+        } else {
+            if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                h2.classList.remove('sr-only');
+            }
+        }
+    });
+    enableSaveDiscardButtons();
+}
+
+//////////////////////////////////
+///// Submit Settings Change /////
+//////////////////////////////////
+
 document.getElementById('settings').onsubmit = function () {
     const bgColor = document.getElementById('bg_color').value;
     chrome.storage.sync.set({ bgColor: bgColor });
@@ -231,6 +256,9 @@ document.getElementById('settings').onsubmit = function () {
     const columnSize = document.getElementById('column_size').value;
     chrome.storage.sync.set({ columnSize: columnSize });
 
+    const hideDefaultFolders = document.getElementById('hide_default_folders').checked;
+    chrome.storage.sync.set({ hideDefaultFolders: hideDefaultFolders });
+
     const live = document.getElementById('live');
     live.textContent = '';
     live.style.display = 'none';
@@ -246,6 +274,10 @@ document.getElementById('settings').onsubmit = function () {
 
     return false;
 }
+
+//////////////////////////////////
+////// Initialize Settings ///////
+//////////////////////////////////
 
 function setStyles() {
     chrome.storage.sync.get('bgColor', function (data) {
@@ -325,11 +357,41 @@ function setStyles() {
             r.style.setProperty('--user-column-size', data.columnSize.toString() + 'px');
             document.getElementById('column_size').value = data.columnSize;
         } else {
-            r.style.setProperty('--user-column-size', '259px');
-            document.getElementById('column_size').value = '259';
+            r.style.setProperty('--user-column-size', '240px');
+            document.getElementById('column_size').value = '240';
+        }
+    });
+
+    chrome.storage.sync.get('hideDefaultFolders', function (data) {
+        if (data && data.hideDefaultFolders) {
+            document.getElementById('hide_default_folders').checked = data.hideDefaultFolders;
+            const h2s = document.querySelectorAll('h2');
+            h2s.forEach(h2 => {
+                if (data.hideDefaultFolders) {
+                    if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                        h2.classList.add('sr-only');
+                    }
+                } else {
+                    if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                        h2.classList.remove('sr-only');
+                    }
+                }
+            });
+        } else {
+            document.getElementById('hide_default_folders').checked = false;
+            const h2s = document.querySelectorAll('h2');
+            h2s.forEach(h2 => {
+                if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                    h2.classList.remove('sr-only');
+                }
+            });
         }
     });
 }
+
+//////////////////////////////////
+//// Discard Settings Changes ////
+//////////////////////////////////
 
 document.getElementById('discard_changes').onclick = function () {
     setStyles();
@@ -345,6 +407,10 @@ document.getElementById('discard_changes').onclick = function () {
         live.style.backgroundColor = '#444444';
     }, 500);
 }
+
+//////////////////////////////////
+///// Manage Details/Summary /////
+//////////////////////////////////
 
 document.querySelector('main').addEventListener('focusin', () => {
     document.getElementById('customize').open = false;
