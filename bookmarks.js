@@ -99,6 +99,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const folderLink = document.createElement('a');
                 folderLink.href = level === 1 ? 'bookmarks.html' : '?start=' + node.id;
+                if (isDemo) {
+                    folderLink.href += '&demo=true';
+                }
                 folderLink.textContent = level === 1 ? '^' : '>';
                 folderLink.setAttribute('aria-label', level === 1 ? 'Go to bookmarks homepage' : "Go to " + node.title + " folder");
                 if (heading.textContent !== 'My Bookmarks') {
