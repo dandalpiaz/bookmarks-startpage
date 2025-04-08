@@ -1,13 +1,29 @@
-
 //////////////////////////////////
 /////// Get Bookmark Data ////////
 //////////////////////////////////
 
-document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const startPage = urlParams.get('start');
+const urlParams = new URLSearchParams(window.location.search);
+const startPage = urlParams.get('start');
+const isDemo = urlParams.get('demo') === 'true';
 
-    chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
+document.addEventListener('DOMContentLoaded', function () {
+    if (isDemo) {
+        fetch('demo.json')
+            .then(response => response.json())
+            .then(bookmarkTreeNodes => {
+                processBookmarks(bookmarkTreeNodes);
+            })
+            .catch(error => {
+                console.error('Error loading demo.json:', error);
+                document.getElementById('bookmarksContainer').textContent = 'Error loading demo data.';
+            });
+    } else {
+        chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
+            processBookmarks(bookmarkTreeNodes);
+        });
+    }
+
+    function processBookmarks(bookmarkTreeNodes) {
         const bookmarksContainer = document.getElementById('bookmarksContainer');
         
         if (startPage) {
@@ -58,8 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             document.title = h1.textContent + ' - Bookmarks Startpage';
         }
-
-    });
+    }
 
     function findStartNode(nodes, targetName) {
         for (const node of nodes) {
@@ -123,6 +138,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    setTimeout(() => {
+        setStyles();
+    }, 0);
 });
 
 //////////////////////////////////
@@ -147,7 +166,7 @@ function lightenOrDarkenColor(hex, percent) {
     g = clamp(g + delta);
     b = clamp(b + delta);
 
-    return "#" + toHex(r) + toHex(g) + toHex(b);
+    return "#" + toHex(r) + toHex(b);
 }
 
 function clamp(value) {
@@ -216,11 +235,11 @@ document.getElementById('hide_default_folders').onchange = function () {
     h2s.forEach(h2 => {
         if (this.checked) {
             if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                h2.classList.add('sr-only');
+                h2.classList.add('hidden-folder');
             }
         } else {
             if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                h2.classList.remove('sr-only');
+                h2.classList.remove('hidden-folder');
             }
         }
     });
@@ -233,31 +252,36 @@ document.getElementById('hide_default_folders').onchange = function () {
 
 document.getElementById('settings').onsubmit = function () {
     const bgColor = document.getElementById('bg_color').value;
-    chrome.storage.sync.set({ bgColor: bgColor });
-
     const titleColor = document.getElementById('title_color').value;
-    chrome.storage.sync.set({ titleColor: titleColor });
-
     const headingColor = document.getElementById('heading_color').value;
-    chrome.storage.sync.set({ headingColor: headingColor });
-
     const linkColor = document.getElementById('link_color').value;
-    chrome.storage.sync.set({ linkColor: linkColor });
-
     const titleFont = document.getElementById('title_font').value;
-    chrome.storage.sync.set({ titleFont: titleFont });
-
     const headingFont = document.getElementById('heading_font').value;
-    chrome.storage.sync.set({ headingFont: headingFont });
-
     const linkFont = document.getElementById('link_font').value;
-    chrome.storage.sync.set({ linkFont: linkFont });
-
     const columnSize = document.getElementById('column_size').value;
-    chrome.storage.sync.set({ columnSize: columnSize });
-
     const hideDefaultFolders = document.getElementById('hide_default_folders').checked;
-    chrome.storage.sync.set({ hideDefaultFolders: hideDefaultFolders });
+
+    if (isDemo) {
+        sessionStorage.setItem('bgColor', bgColor);
+        sessionStorage.setItem('titleColor', titleColor);
+        sessionStorage.setItem('headingColor', headingColor);
+        sessionStorage.setItem('linkColor', linkColor);
+        sessionStorage.setItem('titleFont', titleFont);
+        sessionStorage.setItem('headingFont', headingFont);
+        sessionStorage.setItem('linkFont', linkFont);
+        sessionStorage.setItem('columnSize', columnSize);
+        sessionStorage.setItem('hideDefaultFolders', hideDefaultFolders);
+    } else {
+        chrome.storage.sync.set({ bgColor });
+        chrome.storage.sync.set({ titleColor });
+        chrome.storage.sync.set({ headingColor });
+        chrome.storage.sync.set({ linkColor });
+        chrome.storage.sync.set({ titleFont });
+        chrome.storage.sync.set({ headingFont });
+        chrome.storage.sync.set({ linkFont });
+        chrome.storage.sync.set({ columnSize });
+        chrome.storage.sync.set({ hideDefaultFolders });
+    }
 
     const live = document.getElementById('live');
     live.textContent = '';
@@ -369,11 +393,11 @@ function setStyles() {
             h2s.forEach(h2 => {
                 if (data.hideDefaultFolders) {
                     if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                        h2.classList.add('sr-only');
+                        h2.classList.add('hidden-folder');
                     }
                 } else {
                     if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                        h2.classList.remove('sr-only');
+                        h2.classList.remove('hidden-folder');
                     }
                 }
             });
@@ -382,7 +406,7 @@ function setStyles() {
             const h2s = document.querySelectorAll('h2');
             h2s.forEach(h2 => {
                 if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                    h2.classList.remove('sr-only');
+                    h2.classList.remove('hidden-folder');
                 }
             });
         }
@@ -422,5 +446,3 @@ document.addEventListener('click', (event) => {
         details.open = false;
     }
 });
-
-setStyles();
