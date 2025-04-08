@@ -261,17 +261,7 @@ document.getElementById('settings').onsubmit = function () {
     const columnSize = document.getElementById('column_size').value;
     const hideDefaultFolders = document.getElementById('hide_default_folders').checked;
 
-    if (isDemo) {
-        sessionStorage.setItem('bgColor', bgColor);
-        sessionStorage.setItem('titleColor', titleColor);
-        sessionStorage.setItem('headingColor', headingColor);
-        sessionStorage.setItem('linkColor', linkColor);
-        sessionStorage.setItem('titleFont', titleFont);
-        sessionStorage.setItem('headingFont', headingFont);
-        sessionStorage.setItem('linkFont', linkFont);
-        sessionStorage.setItem('columnSize', columnSize);
-        sessionStorage.setItem('hideDefaultFolders', hideDefaultFolders);
-    } else {
+    if (!isDemo) {
         chrome.storage.sync.set({ bgColor });
         chrome.storage.sync.set({ titleColor });
         chrome.storage.sync.set({ headingColor });
@@ -287,10 +277,17 @@ document.getElementById('settings').onsubmit = function () {
     live.textContent = '';
     live.style.display = 'none';
     setTimeout(() => {
-        live.textContent = 'Settings saved successfully!';
-        live.style.color = 'lightgreen';
-        live.style.display = 'block';
-        live.style.backgroundColor = 'darkgreen';
+        if (isDemo) {
+            live.textContent = 'Settings cannot be saved in demo mode.';
+            live.style.color = '#ffffff';
+            live.style.display = 'block';
+            live.style.backgroundColor = '#444444';
+        } else {
+            live.textContent = 'Settings saved successfully!';
+            live.style.color = 'lightgreen';
+            live.style.display = 'block';
+            live.style.backgroundColor = 'darkgreen';
+        }
     }, 500);
 
     document.getElementById('save_changes').disabled = true;
@@ -304,6 +301,34 @@ document.getElementById('settings').onsubmit = function () {
 //////////////////////////////////
 
 function setStyles() {
+    if (isDemo) {
+        document.getElementById('bg_color').value = '#000000';
+        r.style.setProperty('--user-background-color', '#000000');
+        r.style.setProperty('--scrollbar-color', '#444444');
+        document.getElementById('title_color').value = '#ffffff';
+        r.style.setProperty('--user-title-color', '#ffffff');
+        document.getElementById('heading_color').value = '#52ff94';
+        r.style.setProperty('--user-heading-color', '#52ff94');
+        document.getElementById('link_color').value = '#b0e0e6';
+        r.style.setProperty('--user-link-color', '#b0e0e6');
+        document.getElementById('title_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+        r.style.setProperty('--user-title-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+        document.getElementById('heading_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+        r.style.setProperty('--user-heading-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+        document.getElementById('link_font').value = 'Noto Serif';
+        r.style.setProperty('--user-link-font', 'Noto Serif');
+        document.getElementById('column_size').value = '240';
+        r.style.setProperty('--user-column-size', '240px');
+        document.getElementById('hide_default_folders').checked = false;
+        const h2s = document.querySelectorAll('h2');
+        h2s.forEach(h2 => {
+            if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                h2.classList.remove('hidden-folder');
+            }
+        });
+        return;
+    }
+
     chrome.storage.sync.get('bgColor', function (data) {
         if (data && data.bgColor) {
             r.style.setProperty('--user-background-color', data.bgColor);
