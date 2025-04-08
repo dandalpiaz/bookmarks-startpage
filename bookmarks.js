@@ -166,7 +166,7 @@ function lightenOrDarkenColor(hex, percent) {
     g = clamp(g + delta);
     b = clamp(b + delta);
 
-    return "#" + toHex(r) + toHex(b);
+    return "#" + toHex(r) + toHex(g) + toHex(b);
 }
 
 function clamp(value) {
