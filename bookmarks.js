@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             favicon.height = 16;
                             favicon.alt = '';
 
-                            li.appendChild(favicon);
+                            link.prepend(favicon);
                             li.appendChild(link);
                             ul.appendChild(li);
                         }
@@ -305,6 +305,7 @@ document.getElementById('settings').onsubmit = function () {
 
 function setStyles() {
     if (isDemo) {
+        document.getElementById('site-title').href = 'bookmarks.html?demo=true';
         document.getElementById('bg_color').value = '#000000';
         r.style.setProperty('--user-background-color', '#000000');
         r.style.setProperty('--scrollbar-color', '#444444');
