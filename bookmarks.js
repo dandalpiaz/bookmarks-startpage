@@ -1,13 +1,29 @@
-
 //////////////////////////////////
 /////// Get Bookmark Data ////////
 //////////////////////////////////
 
-document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const startPage = urlParams.get('start');
+const urlParams = new URLSearchParams(window.location.search);
+const startPage = urlParams.get('start');
+const isDemo = urlParams.get('demo') === 'true';
 
-    chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
+document.addEventListener('DOMContentLoaded', function () {
+    if (isDemo) {
+        fetch('demo.json')
+            .then(response => response.json())
+            .then(bookmarkTreeNodes => {
+                processBookmarks(bookmarkTreeNodes);
+            })
+            .catch(error => {
+                console.error('Error loading demo.json:', error);
+                document.getElementById('bookmarksContainer').textContent = 'Error loading demo data.';
+            });
+    } else {
+        chrome.bookmarks.getTree(function (bookmarkTreeNodes) {
+            processBookmarks(bookmarkTreeNodes);
+        });
+    }
+
+    function processBookmarks(bookmarkTreeNodes) {
         const bookmarksContainer = document.getElementById('bookmarksContainer');
         
         if (startPage) {
@@ -58,8 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             document.title = h1.textContent + ' - Bookmarks Startpage';
         }
-
-    });
+    }
 
     function findStartNode(nodes, targetName) {
         for (const node of nodes) {
@@ -84,6 +99,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const folderLink = document.createElement('a');
                 folderLink.href = level === 1 ? 'bookmarks.html' : '?start=' + node.id;
+                if (isDemo) {
+                    folderLink.href += '&demo=true';
+                }
                 folderLink.textContent = level === 1 ? '^' : '>';
                 folderLink.setAttribute('aria-label', level === 1 ? 'Go to bookmarks homepage' : "Go to " + node.title + " folder");
                 if (heading.textContent !== 'My Bookmarks') {
@@ -112,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             favicon.height = 16;
                             favicon.alt = '';
 
-                            li.appendChild(favicon);
+                            link.prepend(favicon);
                             li.appendChild(link);
                             ul.appendChild(li);
                         }
@@ -123,6 +141,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    setTimeout(() => {
+        setStyles();
+    }, 0);
 });
 
 //////////////////////////////////
@@ -216,11 +238,11 @@ document.getElementById('hide_default_folders').onchange = function () {
     h2s.forEach(h2 => {
         if (this.checked) {
             if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                h2.classList.add('sr-only');
+                h2.classList.add('hidden-folder');
             }
         } else {
             if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                h2.classList.remove('sr-only');
+                h2.classList.remove('hidden-folder');
             }
         }
     });
@@ -233,40 +255,42 @@ document.getElementById('hide_default_folders').onchange = function () {
 
 document.getElementById('settings').onsubmit = function () {
     const bgColor = document.getElementById('bg_color').value;
-    chrome.storage.sync.set({ bgColor: bgColor });
-
     const titleColor = document.getElementById('title_color').value;
-    chrome.storage.sync.set({ titleColor: titleColor });
-
     const headingColor = document.getElementById('heading_color').value;
-    chrome.storage.sync.set({ headingColor: headingColor });
-
     const linkColor = document.getElementById('link_color').value;
-    chrome.storage.sync.set({ linkColor: linkColor });
-
     const titleFont = document.getElementById('title_font').value;
-    chrome.storage.sync.set({ titleFont: titleFont });
-
     const headingFont = document.getElementById('heading_font').value;
-    chrome.storage.sync.set({ headingFont: headingFont });
-
     const linkFont = document.getElementById('link_font').value;
-    chrome.storage.sync.set({ linkFont: linkFont });
-
     const columnSize = document.getElementById('column_size').value;
-    chrome.storage.sync.set({ columnSize: columnSize });
-
     const hideDefaultFolders = document.getElementById('hide_default_folders').checked;
-    chrome.storage.sync.set({ hideDefaultFolders: hideDefaultFolders });
+
+    if (!isDemo) {
+        chrome.storage.sync.set({ bgColor });
+        chrome.storage.sync.set({ titleColor });
+        chrome.storage.sync.set({ headingColor });
+        chrome.storage.sync.set({ linkColor });
+        chrome.storage.sync.set({ titleFont });
+        chrome.storage.sync.set({ headingFont });
+        chrome.storage.sync.set({ linkFont });
+        chrome.storage.sync.set({ columnSize });
+        chrome.storage.sync.set({ hideDefaultFolders });
+    }
 
     const live = document.getElementById('live');
     live.textContent = '';
     live.style.display = 'none';
     setTimeout(() => {
-        live.textContent = 'Settings saved successfully!';
-        live.style.color = 'lightgreen';
-        live.style.display = 'block';
-        live.style.backgroundColor = 'darkgreen';
+        if (isDemo) {
+            live.textContent = 'Settings cannot be saved in demo mode.';
+            live.style.color = '#ffffff';
+            live.style.display = 'block';
+            live.style.backgroundColor = '#444444';
+        } else {
+            live.textContent = 'Settings saved successfully!';
+            live.style.color = 'lightgreen';
+            live.style.display = 'block';
+            live.style.backgroundColor = 'darkgreen';
+        }
     }, 500);
 
     document.getElementById('save_changes').disabled = true;
@@ -280,6 +304,35 @@ document.getElementById('settings').onsubmit = function () {
 //////////////////////////////////
 
 function setStyles() {
+    if (isDemo) {
+        document.getElementById('site-title').href = 'bookmarks.html?demo=true';
+        document.getElementById('bg_color').value = '#000000';
+        r.style.setProperty('--user-background-color', '#000000');
+        r.style.setProperty('--scrollbar-color', '#444444');
+        document.getElementById('title_color').value = '#ffffff';
+        r.style.setProperty('--user-title-color', '#ffffff');
+        document.getElementById('heading_color').value = '#52ff94';
+        r.style.setProperty('--user-heading-color', '#52ff94');
+        document.getElementById('link_color').value = '#b0e0e6';
+        r.style.setProperty('--user-link-color', '#b0e0e6');
+        document.getElementById('title_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+        r.style.setProperty('--user-title-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+        document.getElementById('heading_font').value = 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif';
+        r.style.setProperty('--user-heading-font', 'system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif');
+        document.getElementById('link_font').value = 'Noto Serif';
+        r.style.setProperty('--user-link-font', 'Noto Serif');
+        document.getElementById('column_size').value = '240';
+        r.style.setProperty('--user-column-size', '240px');
+        document.getElementById('hide_default_folders').checked = false;
+        const h2s = document.querySelectorAll('h2');
+        h2s.forEach(h2 => {
+            if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                h2.classList.remove('hidden-folder');
+            }
+        });
+        return;
+    }
+
     chrome.storage.sync.get('bgColor', function (data) {
         if (data && data.bgColor) {
             r.style.setProperty('--user-background-color', data.bgColor);
@@ -369,11 +422,11 @@ function setStyles() {
             h2s.forEach(h2 => {
                 if (data.hideDefaultFolders) {
                     if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                        h2.classList.add('sr-only');
+                        h2.classList.add('hidden-folder');
                     }
                 } else {
                     if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                        h2.classList.remove('sr-only');
+                        h2.classList.remove('hidden-folder');
                     }
                 }
             });
@@ -382,7 +435,7 @@ function setStyles() {
             const h2s = document.querySelectorAll('h2');
             h2s.forEach(h2 => {
                 if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
-                    h2.classList.remove('sr-only');
+                    h2.classList.remove('hidden-folder');
                 }
             });
         }
@@ -422,5 +475,3 @@ document.addEventListener('click', (event) => {
         details.open = false;
     }
 });
-
-setStyles();

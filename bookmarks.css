@@ -134,6 +134,10 @@
     border: 0;
 }
 
+.hidden-folder {
+    display: none;
+}
+
 html {
     scrollbar-color: var(--scrollbar-color) transparent;
 }
