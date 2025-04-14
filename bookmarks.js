@@ -236,12 +236,13 @@ document.getElementById('column_size').onchange = function () {
 document.getElementById('hide_default_folders').onchange = function () {
     const h2s = document.querySelectorAll('h2');
     h2s.forEach(h2 => {
+        const textContentLower = h2.textContent.toLowerCase();
         if (this.checked) {
-            if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+            if (textContentLower.includes('other bookmarks') || textContentLower.includes('bookmarks bar')) {
                 h2.classList.add('hidden-folder');
             }
         } else {
-            if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+            if (textContentLower.includes('other bookmarks') || textContentLower.includes('bookmarks bar')) {
                 h2.classList.remove('hidden-folder');
             }
         }
@@ -420,12 +421,13 @@ function setStyles() {
             document.getElementById('hide_default_folders').checked = data.hideDefaultFolders;
             const h2s = document.querySelectorAll('h2');
             h2s.forEach(h2 => {
+                const textContentLower = h2.textContent.toLowerCase();
                 if (data.hideDefaultFolders) {
-                    if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                    if (textContentLower.includes('other bookmarks') || textContentLower.includes('bookmarks bar')) {
                         h2.classList.add('hidden-folder');
                     }
                 } else {
-                    if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                    if (textContentLower.includes('other bookmarks') || textContentLower.includes('bookmarks bar')) {
                         h2.classList.remove('hidden-folder');
                     }
                 }
@@ -434,7 +436,8 @@ function setStyles() {
             document.getElementById('hide_default_folders').checked = false;
             const h2s = document.querySelectorAll('h2');
             h2s.forEach(h2 => {
-                if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
+                const textContentLower = h2.textContent.toLowerCase();
+                if (textContentLower.includes('other bookmarks') || textContentLower.includes('bookmarks bar')) {
                     h2.classList.remove('hidden-folder');
                 }
             });
