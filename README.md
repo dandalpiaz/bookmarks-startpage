@@ -7,10 +7,11 @@ A browser extension that displays your bookmarks on simple, customizable pages. 
 
 ## Todo
 
-- Add demo page, landing page
-- Workaround for missing favicons
-- Look into [Featured badge](https://www.extension.ninja/blog/post/how-to-get-featured-extension-badge-chrome-web-store/)
+- Update for [changes to Bookmarks API](https://developer.chrome.com/blog/bookmarks-sync-changes)?
+- Add screenshot of customize controls
 - Publish for Firefox (test)
+- Add landing page, demo page?
+- Workaround for missing favicons
 
 ### Later
 
