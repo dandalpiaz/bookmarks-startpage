@@ -7,9 +7,9 @@ A browser extension that displays your bookmarks on simple, customizable pages. 
 
 ## Todo
 
+- **Firefox version (test)**
 - Update for [changes to Bookmarks API](https://developer.chrome.com/blog/bookmarks-sync-changes)?
 - Add screenshot of customize controls
-- Publish for Firefox (test)
 
 ### Later
 
