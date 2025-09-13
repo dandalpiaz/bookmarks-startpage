@@ -7,13 +7,13 @@ A browser extension that displays your bookmarks on simple, customizable pages. 
 
 ## Todo
 
+- **Workaround for missing favicons**
+- **Add screenshot of customize controls**
 - **Firefox version (test)**
 - Update for [changes to Bookmarks API](https://developer.chrome.com/blog/bookmarks-sync-changes)?
-- Add screenshot of customize controls
 
 ### Later
 
 - For testing: `chrome.storage.sync.clear()`
 - Test multiple sections issue w/ uneven bookmark nesting
 - Add option for masonry layout
-- Workaround for missing favicons

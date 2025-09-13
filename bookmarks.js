@@ -125,10 +125,18 @@ document.addEventListener('DOMContentLoaded', function () {
                             link.textContent = child.title;
 
                             const favicon = document.createElement('img');
-                            favicon.src = 'https://www.google.com/s2/favicons?sz=16&domain_url=' + child.url;
                             favicon.width = 16;
                             favicon.height = 16;
                             favicon.alt = '';
+                            
+                            if (window.location.protocol === 'chrome-extension:') {
+                                const faviconUrl = new URL(chrome.runtime.getURL("/_favicon/"));
+                                faviconUrl.searchParams.set("pageUrl", child.url);
+                                faviconUrl.searchParams.set("size", "16");
+                                favicon.src = faviconUrl.toString();
+                            } else {
+                                favicon.src = 'https://www.google.com/s2/favicons?sz=16&domain_url=' + child.url;
+                            }
 
                             link.prepend(favicon);
                             li.appendChild(link);
