@@ -1,24 +1,20 @@
 {
   "manifest_version": 3,
   "name": "Bookmarks Startpage",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "Displays your bookmarks on simple, customizable pages.",
   "permissions": [
     "bookmarks",
     "storage",
-    "tabs",
     "favicon"
   ],
   "action": {
     "default_popup": "popup.html"
   },
-  "background": {
-    "service_worker": "background.js"
-  },
   "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   },
   "browser_specific_settings": {
     "gecko": {
