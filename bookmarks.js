@@ -258,6 +258,18 @@ document.getElementById('hide_default_folders').onchange = function () {
     enableSaveDiscardButtons();
 }
 
+document.getElementById('prevent_name_wrap').onchange = function () {
+    const lis = document.querySelectorAll('.section li');
+    lis.forEach(li => {
+        if (this.checked) {
+            li.classList.add('no-wrap');
+        } else {
+            li.classList.remove('no-wrap');
+        }
+    });
+    enableSaveDiscardButtons();
+}
+
 //////////////////////////////////
 ///// Submit Settings Change /////
 //////////////////////////////////
@@ -272,6 +284,7 @@ document.getElementById('settings').onsubmit = function () {
     const linkFont = document.getElementById('link_font').value;
     const columnSize = document.getElementById('column_size').value;
     const hideDefaultFolders = document.getElementById('hide_default_folders').checked;
+    const preventNameWrap = document.getElementById('prevent_name_wrap').checked;
 
     if (!isDemo) {
         chrome.storage.sync.set({ bgColor });
@@ -283,6 +296,7 @@ document.getElementById('settings').onsubmit = function () {
         chrome.storage.sync.set({ linkFont });
         chrome.storage.sync.set({ columnSize });
         chrome.storage.sync.set({ hideDefaultFolders });
+        chrome.storage.sync.set({ preventNameWrap });
     }
 
     const live = document.getElementById('live');
@@ -338,6 +352,11 @@ function setStyles() {
             if ( h2.textContent.includes('Other bookmarks') || h2.textContent.includes('Bookmarks bar') ) {
                 h2.classList.remove('hidden-folder');
             }
+        });
+        document.getElementById('prevent_name_wrap').checked = false;
+        const lis = document.querySelectorAll('.section li');
+        lis.forEach(li => {
+            li.classList.remove('no-wrap');
         });
         return;
     }
@@ -448,6 +467,26 @@ function setStyles() {
                 if (textContentLower.includes('other bookmarks') || textContentLower.includes('bookmarks bar')) {
                     h2.classList.remove('hidden-folder');
                 }
+            });
+        }
+    });
+
+    chrome.storage.sync.get('preventNameWrap', function (data) {
+        if (data && data.preventNameWrap) {
+            document.getElementById('prevent_name_wrap').checked = data.preventNameWrap;
+            const lis = document.querySelectorAll('.section li');
+            lis.forEach(li => {
+                if (data.preventNameWrap) {
+                    li.classList.add('no-wrap');
+                } else {
+                    li.classList.remove('no-wrap');
+                }
+            });
+        } else {
+            document.getElementById('prevent_name_wrap').checked = false;
+            const lis = document.querySelectorAll('.section li');
+            lis.forEach(li => {
+                li.classList.remove('no-wrap');
             });
         }
     });

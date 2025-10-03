@@ -244,6 +244,13 @@ img {
 
 .section {
     margin-right: 15px;
+    max-width: calc(100vw - 50px);
+}
+
+.no-wrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 details {
@@ -294,6 +301,15 @@ label {
 
 .setting {
     text-align: right;
+}
+
+.checkbox-setting input, .checkbox-setting label {
+    text-align: left;
+    font-size: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 235px;
+    margin-top: 15px;
 }
 
 hr {
