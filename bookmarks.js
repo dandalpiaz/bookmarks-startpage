@@ -270,6 +270,17 @@ document.getElementById('settings').onsubmit = function () {
     const hideDefaultFolders = document.getElementById('hide_default_folders').checked;
     const preventNameWrap = document.getElementById('prevent_name_wrap').checked;
 
+    chrome.storage.sync.set({ bgColor });
+    chrome.storage.sync.set({ titleColor });
+    chrome.storage.sync.set({ headingColor });
+    chrome.storage.sync.set({ linkColor });
+    chrome.storage.sync.set({ titleFont });
+    chrome.storage.sync.set({ headingFont });
+    chrome.storage.sync.set({ linkFont });
+    chrome.storage.sync.set({ columnSize });
+    chrome.storage.sync.set({ hideDefaultFolders });
+    chrome.storage.sync.set({ preventNameWrap });
+
     const live = document.getElementById('live');
     live.textContent = '';
     live.style.display = 'none';
