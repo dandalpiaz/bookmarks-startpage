@@ -7,8 +7,8 @@ A browser extension that displays your bookmarks on simple, customizable pages. 
 
 ## Todo
 
-- Add links to popup and customize section
-- Firefox version (test)
+- Add a skip-to link
+- Add links (gh) to popup and customize section?
 - Update for [changes to Bookmarks API](https://developer.chrome.com/blog/bookmarks-sync-changes)?
 
 ### Later
